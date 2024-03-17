@@ -24,7 +24,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.weatherhelper.R
 
@@ -33,7 +35,7 @@ fun LoginScreen(navController: NavController) {
 
 
     Image(
-        painter = painterResource(id = R.drawable.fundo),
+        painter = painterResource(id = R.drawable.bg),
         contentDescription = null,
         modifier = Modifier
             .fillMaxSize(),
@@ -42,27 +44,29 @@ fun LoginScreen(navController: NavController) {
 
     Column(
         modifier = Modifier
-            .padding(top = 85.dp),
+            .padding(bottom = 150.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "logo",
-            modifier = Modifier.size(260.dp)
+            modifier = Modifier
+                .size(260.dp)
                 .clip(CircleShape)
         )
-        ElevatedButton(
+        Text(text = "Weather Helper", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Button(
             onClick = {
                 navController.navigate("main")
             },
             modifier = Modifier
-                .padding(top = 25.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0x833B4949))
+                .padding(top = 10.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF141414))
         ) {
             Text(
                 text = "Pesquisar Clima",
-                color = Color.Black
+                color = Color.Gray
             )
         }
     }

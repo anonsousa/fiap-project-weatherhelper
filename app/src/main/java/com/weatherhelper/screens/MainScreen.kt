@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.weatherhelper.screens
 
 import androidx.compose.foundation.Image
@@ -6,24 +8,22 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.CardElevation
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -57,7 +57,7 @@ fun MainScreen(navController: NavController) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.fundo),
+            painter = painterResource(id = R.drawable.bg),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds,
@@ -80,12 +80,11 @@ fun MainScreen(navController: NavController) {
                 value = city,
                 onValueChange = {
                                 city = it
-                }, // Função de callback para mudanças no texto
+                },
                 label = { Text("Digite o local...", color = Color.DarkGray) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
-                colors = TextFieldDefaults.colors(Color(0xFF131313)),
                 trailingIcon = {
                     IconButton(onClick = {
                         var call = WeatherFactory().getWeatherService().getWeatherByCity(
@@ -100,7 +99,6 @@ fun MainScreen(navController: NavController) {
                                 weatherResponse?.let { weatherList = listOf(it) }
                                 println(weatherList)
                             }
-
                             override fun onFailure(call: Call<Weather>, t: Throwable) {
                                 TODO("Not yet implemented")
                             }
@@ -118,6 +116,7 @@ fun MainScreen(navController: NavController) {
             .align(Alignment.TopCenter)
             .padding(top = 180.dp)){
             WeatherCard(
+                colorUser = CardDefaults.cardColors(Color.Transparent),
                 path = R.drawable.weather,
                 title = "${weatherList.firstOrNull()?.sys?.country ?: "País/Cidade"}",
                 content = "${weatherList.firstOrNull()?.main?.temp ?: "0.0"}°C"
@@ -126,15 +125,25 @@ fun MainScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(top = 200.dp)
+                .padding(top = 8.dp)
         ) {
             Row (
                 Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween){
-                WeatherCard(path = R.drawable.min_temp, title = "Min", content = "${weatherList.firstOrNull()?.main?.tempMin ?: "0.0"}°C")
-                WeatherCard(path = R.drawable.temp_max, title = "Max", content = "${weatherList.firstOrNull()?.main?.tempMax ?: "0.0"}°C")
+                WeatherCard(
+                    colorUser = CardDefaults.cardColors(Color.Transparent),
+                    path = R.drawable.min_temp,
+                    title = "Min",
+                    content = "${weatherList.firstOrNull()?.main?.tempMin ?: "0.0"}°C"
+                )
+                WeatherCard(
+                    colorUser = CardDefaults.cardColors(Color.Transparent),
+                    path = R.drawable.temp_max,
+                    title = "Max",
+                    content = "${weatherList.firstOrNull()?.main?.tempMax ?: "0.0"}°C"
+                )
 
             }
             Row (
@@ -142,8 +151,18 @@ fun MainScreen(navController: NavController) {
                     .fillMaxWidth()
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween){
-                WeatherCard(path = R.drawable.humidity_solid, title = "Humidade", content = "${weatherList.firstOrNull()?.main?.humidity ?: "0"}")
-                WeatherCard(path = R.drawable.wind_solid, title = "Vento", content = "${weatherList.firstOrNull()?.wind?.speed ?: "00.00"}Km/h")
+                WeatherCard(
+                    colorUser = CardDefaults.cardColors(Color.Transparent),
+                    path = R.drawable.humidity_solid,
+                    title = "Humidade",
+                    content = "${weatherList.firstOrNull()?.main?.humidity ?: "0"}"
+                )
+                WeatherCard(
+                    colorUser = CardDefaults.cardColors(Color.Transparent),
+                    path = R.drawable.wind_solid,
+                    title = "Vento",
+                    content = "${weatherList.firstOrNull()?.wind?.speed ?: "00.00"}Km/h"
+                )
             }
         }
     }
@@ -151,10 +170,11 @@ fun MainScreen(navController: NavController) {
 
 
 @Composable
-fun WeatherCard(path: Int, title: String, content: String) {
+fun WeatherCard(colorUser: CardColors, path: Int, title: String, content: String) {
     Card(
-        colors = CardDefaults.cardColors(Color(0xFFA29B9B)),
-        modifier = Modifier.padding(vertical = 8.dp, horizontal = 4.dp)
+        colors = colorUser,
+        modifier = Modifier.padding(vertical = 8.dp, horizontal = 4.dp),
+        shape = RoundedCornerShape(25.dp),
 
     ) {
         Row(modifier = Modifier.padding(16.dp),
