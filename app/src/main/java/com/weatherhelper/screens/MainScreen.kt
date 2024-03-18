@@ -57,7 +57,7 @@ fun MainScreen(navController: NavController) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.bg),
+            painter = painterResource(id = R.drawable.test),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds,
@@ -116,7 +116,7 @@ fun MainScreen(navController: NavController) {
             .align(Alignment.TopCenter)
             .padding(top = 180.dp)){
             WeatherCard(
-                colorUser = CardDefaults.cardColors(Color.Transparent),
+                colorUser = CardDefaults.cardColors(Color(0x969271F5)),
                 path = R.drawable.weather,
                 title = "${weatherList.firstOrNull()?.sys?.country ?: "País/Cidade"}",
                 content = "${weatherList.firstOrNull()?.main?.temp ?: "0.0"}°C"
@@ -125,7 +125,7 @@ fun MainScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(top = 8.dp)
+                .padding(top = 100.dp)
         ) {
             Row (
                 Modifier

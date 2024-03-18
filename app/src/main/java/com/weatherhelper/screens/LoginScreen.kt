@@ -35,7 +35,7 @@ fun LoginScreen(navController: NavController) {
 
 
     Image(
-        painter = painterResource(id = R.drawable.bg),
+        painter = painterResource(id = R.drawable.test),
         contentDescription = null,
         modifier = Modifier
             .fillMaxSize(),
@@ -44,12 +44,12 @@ fun LoginScreen(navController: NavController) {
 
     Column(
         modifier = Modifier
-            .padding(bottom = 150.dp),
+            .padding(bottom = 8.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.drawable.logo_test),
             contentDescription = "logo",
             modifier = Modifier
                 .size(260.dp)
@@ -61,12 +61,12 @@ fun LoginScreen(navController: NavController) {
                 navController.navigate("main")
             },
             modifier = Modifier
-                .padding(top = 10.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF141414))
+                .padding(top = 150.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF855AD3))
         ) {
             Text(
                 text = "Pesquisar Clima",
-                color = Color.Gray
+                color = Color.Black
             )
         }
     }
